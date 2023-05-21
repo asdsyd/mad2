@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import date, datetime, timedelta
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -26,7 +26,7 @@ class Theatre(db.Model):
     name = db.Column(db.String(), nullable=False)
     place = db.Column(db.String(), nullable=False)
     capacity = db.Column(db.Integer(), nullable=False)
-    movies = db.relationship('Movie', backref='theatres')
+    movies = db.relationship('Movie', backref='theatre')
 
 class Movie(db.Model):
     __tablename__ = 'movies'
@@ -35,10 +35,12 @@ class Movie(db.Model):
     name = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Float(), nullable=False)
     tags = db.Column(db.String(), nullable=False)
+    startTime = db.Column(db.DateTime)
+    endTime = db.Column(db.DateTime)
     ticketPrice = db.Column(db.Float(), nullable=False)
     seatsSold = db.Column(db.Integer(), nullable=False)
     totalSeats = db.Column(db.Integer(), nullable=False)
-    theatrePlace = db.Column(db.String(), db.ForeignKey('theatres.id'))
+    theatrePlace = db.Column(db.Integer(), db.ForeignKey('theatres.id'))
     image = db.Column(db.String(), nullable=False)
 
 

@@ -27,5 +27,46 @@ class AdminLogin (Resource):
                 "username":username,
             })
             response.status_code=200
+
             return response
+
+class CreateShow(Resource):
+    def post(self, Venue):
+        showName=request.json["showName"]
+        rating=request.json["rating"]
+        tags=request.json["tags"]
+        ticketPrice=request.json["ticketPrice"]
+        date=request.json["date"]
+        startTime=request.json["startTime"]
+        endTime=request.json["endTime"]
+        print(showName)
+        print(rating)
+        print(tags)
+        print(ticketPrice)
+        print(date)
+        print(startTime)
+        print(endTime)
+        response = jsonify()
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8080')  # Change to the allowed origin for this route
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        return response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

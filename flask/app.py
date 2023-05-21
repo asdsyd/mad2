@@ -1,12 +1,13 @@
 from flask import Flask
 from flask_restful import Api
+from flask_migrate import Migrate
 
 from users import UserLogin, UserRegister
 # from mail import mail
 from models import db
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from admins import AdminLogin
+from admins import AdminLogin, CreateShow
 # from workers import celery_app
 # from cache import cache
 
@@ -28,9 +29,11 @@ def create_app():
     jwt = JWTManager(app)
     app.app_context().push()
 
-    CORS(app, resources={r'/*': {'origins': '*'}})
+    cors=CORS(app, resources={r'/*': {'origins': '*'}})
+
     # cache.init_app(app)
     db.init_app(app)
+    migrate = Migrate(app, db)
     db.create_all()
     app.app_context().push()
 
@@ -50,6 +53,7 @@ app, api = create_app()
 api.add_resource(AdminLogin, '/admin/login')
 api.add_resource(UserLogin, '/user/login')
 api.add_resource(UserRegister, '/user/register')
+api.add_resource(CreateShow, '/admin/<string:Venue>/CreateShow')
 # api.add_resource(Refresh, '/refresh')
 
 # api.add_resource(ProfileInfo, '/<username>/info')
